@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Nouvelle facture{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Nouvelle facture</h1>
+
+<div class="mb-3 col-md-6">
+  <label>Recherche client (live)</label>
+  <input class="form-control" type="search" name="q"
+         hx-get="{% url 'invoicing:client_search' %}"
+         hx-target="#client-results" hx-trigger="keyup changed delay:300ms">
+  <div id="client-results" class="mt-2"></div>
+</div>
+
+<form method="post" class="col-md-8">
+  {% csrf_token %}
+  <div class="mb-2">{{ form.number.label_tag }} {{ form.number }}</div>
+  <div class="mb-2">
+    {{ form.client.label_tag }}
+    {{ form.client }}
+  </div>
+  <div class="mb-2">
+    <label>Projet lié</label>
+    <select name="project" id="projects" class="form-select"></select>
+  </div>
+  <div class="mb-2">{{ form.status.label_tag }} {{ form.status }}</div>
+  <div class="mb-2">{{ form.description.label_tag }} {{ form.description }}</div>
+
+  <h2 class="h6 mt-3">Lignes</h2>
+  {{ formset.management_form }}
+  <table class="table" id="lines">
+    {% for f in formset %}
+      <tr>
+        <td>{{ f.id }}{{ f.label }}</td>
+        <td>{{ f.quantity }}</td>
+        <td>{{ f.unit_price }}</td>
+        {% if f.instance.pk %}<td>{{ f.DELETE }}</td>{% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+  <button class="btn btn-primary">Enregistrer</button>
+</form>
+
+<script>
+  // Charge les projets du client sélectionné.
+  document.addEventListener('DOMContentLoaded', function () {
+    var sel = document.getElementById('id_client');
+    if (sel) sel.addEventListener('change', function () {
+      htmx.ajax('GET', '{% url "invoicing:project_options" %}?client=' + sel.value,
+                {target: '#projects', swap: 'innerHTML'});
+    });
+  });
+</script>
+{% endblock %}

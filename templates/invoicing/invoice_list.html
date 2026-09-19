@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Factures{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Factures</h1>
+<form method="get" class="row g-2 mb-3">
+  <div class="col-auto"><input class="form-control" name="number" value="{{ number }}" placeholder="N° de facture"></div>
+  <div class="col-auto"><button class="btn btn-outline-secondary">Filtrer</button></div>
+  <div class="col-auto">
+    <a href="?sort=number">Trier par n°</a> · <a href="?sort=status">par statut</a>
+  </div>
+</form>
+<table class="table">
+  <thead><tr><th>N°</th><th>Client</th><th>Statut</th></tr></thead>
+  <tbody>
+  {% for i in invoices %}
+    <tr><td><a href="{% url 'invoicing:invoice_detail' i.pk %}">{{ i.number }}</a></td>
+        <td>{{ i.client.name }}</td><td>{{ i.get_status_display }}</td></tr>
+  {% empty %}<tr><td colspan="3" class="text-muted">aucune</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

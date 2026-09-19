@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Rapport{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Rapport factures</h1>
+<form method="get" class="mb-3">
+  <input class="form-control d-inline w-auto" name="q" value="{{ q }}" placeholder="Rechercher un n°">
+  <button class="btn btn-outline-secondary">Rechercher</button>
+</form>
+<ul>{% for i in invoices %}<li>{{ i.number }} — {{ i.get_status_display }}</li>{% empty %}<li class="text-muted">aucun résultat</li>{% endfor %}</ul>
+{% endblock %}

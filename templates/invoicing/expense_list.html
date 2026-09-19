@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Notes de frais{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Notes de frais</h1>
+<table class="table">
+  <thead><tr><th>Objet</th><th>Montant</th><th>Statut</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for e in expenses %}
+    <tr>
+      <td>{{ e.label }}</td><td>{{ e.amount }} €</td><td>{{ e.get_status_display }}</td>
+      <td class="d-flex gap-2">
+        <form method="post" action="{% url 'invoicing:expense_reimburse' e.pk %}">{% csrf_token %}
+          <button class="btn btn-sm btn-success">Rembourser</button></form>
+        <form method="post" action="{% url 'invoicing:expense_transition' e.pk %}" class="d-flex gap-1">{% csrf_token %}
+          <select name="status" class="form-select form-select-sm">
+            <option value="submitted">Soumise</option>
+            <option value="approved">Approuvée</option>
+            <option value="reimbursed">Remboursée</option>
+          </select>
+          <button class="btn btn-sm btn-outline-secondary">Changer</button></form>
+      </td>
+    </tr>
+  {% empty %}<tr><td colspan="4" class="text-muted">aucune</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Administration{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Administration</h1>
+<h2 class="h6">Sociétés</h2>
+<ul>{% for c in companies %}<li>{{ c.name }} — {{ c.siret }}</li>{% endfor %}</ul>
+<h2 class="h6">Utilisateurs</h2>
+<ul>{% for u in users %}<li>{{ u.username }} — {{ u.email }} — staff:{{ u.is_staff }}</li>{% endfor %}</ul>
+{% endblock %}

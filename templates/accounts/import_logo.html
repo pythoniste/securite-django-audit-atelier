@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Importer un logo{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Importer le logo depuis une URL</h1>
+<form method="get" class="mb-3">
+  <input class="form-control d-inline w-auto" name="url" value="{{ url|default:'' }}" placeholder="https://...">
+  <button class="btn btn-outline-secondary">Récupérer</button>
+</form>
+{% if preview %}<pre class="border rounded p-2">{{ preview }}</pre>{% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static %}{% load ui %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}auditflow{% endblock %}</title>
+  <link rel="stylesheet" href="{{ CDN_BASE }}/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <script src="{{ CDN_BASE }}/htmx.org@2.0.3/dist/htmx.min.js"></script>
+</head>
+<body class="container py-4">
+  <nav class="mb-4 d-flex gap-3 border-bottom pb-2 align-items-center">
+    <a href="{% url 'invoicing:dashboard' %}">Tableau de bord</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'invoicing:invoice_list' %}">Factures</a>
+      <a href="{% url 'invoicing:expense_list' %}">Notes de frais</a>
+      <a href="{% url 'profile' %}">Profil</a>
+      <a href="{% url 'logout' %}">Déconnexion</a>
+      <span class="ms-auto">{% app_badge %} {{ user.username }}</span>
+    {% else %}
+      <a href="{% url 'login' %}">Connexion</a>
+      <a href="{% url 'register' %}">Inscription</a>
+    {% endif %}
+  </nav>
+  {% for m in messages %}
+    <div class="alert alert-{{ m.tags|default:'info' }}">{{ m }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</body>
+</html>

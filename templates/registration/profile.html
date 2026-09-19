@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Profil{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Mon profil</h1>
+<form method="post" class="col-md-5">
+  {% csrf_token %}
+  <div class="mb-2"><label>Identifiant</label>{{ form.username }}</div>
+  <div class="mb-2"><label>E-mail</label>{{ form.email }}</div>
+  <div class="mb-2"><label>Prénom</label>{{ form.first_name }}</div>
+  <div class="mb-2"><label>Nom</label>{{ form.last_name }}</div>
+  <button class="btn btn-primary">Enregistrer</button>
+</form>
+{% endblock %}

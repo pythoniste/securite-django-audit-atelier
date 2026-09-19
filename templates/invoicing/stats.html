@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Statistiques{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Statistiques {{ year }}</h1>
+<table class="table">
+  <thead><tr><th>Société</th><th>Factures</th></tr></thead>
+  <tbody>{% for c in companies %}<tr><td>{{ c.name }}</td><td>{{ c.n_invoices }}</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

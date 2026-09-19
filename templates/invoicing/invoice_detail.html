@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Facture {{ invoice.number }}{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Facture {{ invoice.number }}</h1>
+<p><strong>Client :</strong> {{ invoice.client.name }} —
+   <strong>Statut :</strong> {{ invoice.get_status_display }}</p>
+<div class="border rounded p-3 mb-3">{{ invoice.description|safe }}</div>
+<h2 class="h6">Lignes</h2>
+<table class="table">
+  <thead><tr><th>Libellé</th><th>Qté</th><th>PU</th></tr></thead>
+  <tbody>
+  {% for l in invoice.lines.all %}
+    <tr><td>{{ l.label }}</td><td>{{ l.quantity }}</td><td>{{ l.unit_price }} €</td></tr>
+  {% empty %}<tr><td colspan="3" class="text-muted">aucune</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

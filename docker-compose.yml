@@ -1,0 +1,29 @@
+# Bases de données pour la matrice. Profils : postgres, mysql.
+services:
+  postgres:
+    image: postgres:16
+    profiles: ["postgres"]
+    environment:
+      POSTGRES_DB: auditflow
+      POSTGRES_USER: auditflow
+      POSTGRES_PASSWORD: auditflow
+    ports: ["5432:5432"]
+
+  mysql:
+    image: mysql:8
+    profiles: ["mysql"]
+    environment:
+      MYSQL_DATABASE: auditflow
+      MYSQL_USER: auditflow
+      MYSQL_PASSWORD: auditflow
+      MYSQL_ROOT_PASSWORD: root
+    ports: ["3306:3306"]
+
+  web:
+    build: .
+    profiles: ["web"]
+    environment:
+      DB_ENGINE: ${DB_ENGINE:-postgres}
+      DB_HOST: ${DB_HOST:-postgres}
+    ports: ["8000:8000"]
+    depends_on: []

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Note de frais partagée{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Note de frais</h1>
+<p>Toute personne disposant de ce lien peut consulter cette note.</p>
+<table class="table">
+  <tr><th>Salarié</th><td>{{ note.user.get_full_name|default:note.user.username }}</td></tr>
+  <tr><th>E-mail</th><td>{{ note.user.email }}</td></tr>
+  <tr><th>Société</th><td>{{ note.company.name }}</td></tr>
+  <tr><th>Objet</th><td>{{ note.label }}</td></tr>
+  <tr><th>Montant</th><td>{{ note.amount }} €</td></tr>
+  <tr><th>Statut</th><td>{{ note.get_status_display }}</td></tr>
+</table>
+{% endblock %}
