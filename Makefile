@@ -34,7 +34,7 @@ fakecdn: ## Lance le faux CDN instrumenté (port 9000) — voir tools/
 	$(PY) tools/fake_cdn.py
 
 audit: ## Lance pip-audit + bandit
-	-$(VENV)/bin/pip-audit -r requirements.txt
-	-$(VENV)/bin/bandit -q -r . -x $(VENV),tools
+	-$(VENV)/bin/pip-audit
+	-$(VENV)/bin/bandit -q -r . -x ./$(VENV),./tools
 
 .PHONY: help venv migrate seed check run-gunicorn run-runserver fakecdn audit
